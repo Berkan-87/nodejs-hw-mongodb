@@ -1,16 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import pinoHttp from 'pino-http';
+import pino from 'pino-http';
 import contactsRouter from './controllers/contacts.js';
 
-const pino = pinoHttp();
-
-function startServer() {
+export function setupServer() {
   const app = express();
 
   app.use(cors());
   app.use(express.json());
-  app.use(pino);
+  app.use(pino());
 
   app.use('/contacts', contactsRouter);
 
@@ -23,5 +21,3 @@ function startServer() {
     console.log(`Server is running on port ${PORT}`);
   });
 }
-
-export default startServer;

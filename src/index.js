@@ -2,12 +2,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import initMongoConnection from './db/initMongoConnection.js';
-import startServer from './server.js';
+import { setupServer } from './server.js';
 
 const bootstrap = async () => {
   try {
     await initMongoConnection();
-    startServer();
+    setupServer();
   } catch (error) {
     console.error(error);
     process.exit(1);
