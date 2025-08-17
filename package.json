@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },
   "keywords": [],
@@ -12,6 +13,14 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "http-errors": "^2.0.0"
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.1",
+    "nanoid": "^5.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }

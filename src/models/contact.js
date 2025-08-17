@@ -1,26 +1,33 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { nanoid } = require("nanoid");
 
-const contactSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: [true, "Name is required"],
-      trim: true
-    },
-    phoneNumber: {
-      type: String,
-      required: [true, "Phone number is required"],
-      match: [/^\+?[0-9\s\-]{7,15}$/, "Invalid phone number format"]
-    },
-    contactType: {
-      type: String,
-      enum: ["personal", "work", "other"],
-      default: "personal"
-    }
+const contactSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+    default: () => nanoid(),
   },
-  { versionKey: false, timestamps: true }
-);
+  name: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+  },
+  isFavourite: {
+    type: Boolean,
+    default: false,
+  },
+  contactType: {
+    type: String,
+    required: true,
+    enum: ["personal", "work", "other"], // Örnek tipler
+  },
+}, { timestamps: true });
 
-const Contact = model("Contact", contactSchema);
+const Contact = mongoose.model("Contact", contactSchema);
 
 module.exports = Contact;

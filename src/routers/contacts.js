@@ -1,21 +1,12 @@
-const express = require('express');
+const express = require("express");
+const ctrl = require("../controllers/contacts");
 const router = express.Router();
-const ctrl = require('../controllers/contacts');
-const ctrlWrapper = require('../utils/ctrlWrapper');
 
-// Tüm kişileri listele
-router.get('/', ctrlWrapper(ctrl.getAllContacts));
-
-// ID ile kişi getir
-router.get('/:contactId', ctrlWrapper(ctrl.getContactById));
-
-// Yeni kişi ekle
-router.post('/', ctrlWrapper(ctrl.createContact));
-
-// Kişi güncelle (PATCH)
-router.patch('/:contactId', ctrlWrapper(ctrl.updateContact));
-
-// Kişi sil
-router.delete('/:contactId', ctrlWrapper(ctrl.deleteContact));
+// CRUD rotaları
+router.get("/", ctrl.getAllContacts);
+router.get("/:contactId", ctrl.getContactById);
+router.post("/", ctrl.createContact);
+router.patch("/:contactId", ctrl.updateContact);
+router.delete("/:contactId", ctrl.deleteContact);
 
 module.exports = router;
