@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// MongoDB bağlantısı
+// MongoDB bağlantısı (doğrudan MONGO_URL kullanılıyor)
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("✅ MongoDB bağlantısı başarılı"))
