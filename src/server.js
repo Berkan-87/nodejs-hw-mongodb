@@ -10,9 +10,12 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// MongoDB bağlantısı (doğrudan MONGO_URL kullanılıyor)
+// MongoDB bağlantısı
+const mongoUri = process.env.MONGO_URL; // Render veya .env'den alınacak
+console.log("Connecting to MongoDB URI:", mongoUri);
+
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(mongoUri)
   .then(() => console.log("✅ MongoDB bağlantısı başarılı"))
   .catch((err) => {
     console.error("❌ MongoDB bağlantı hatası:", err);
