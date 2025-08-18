@@ -1,11 +1,9 @@
-const errorHandler = (err, req, res, next) => {
-  console.error(err); // Konsola yazmak loglama için faydalı
+module.exports = (err, req, res, next) => {
+  console.error("🔥 Hata:", err.message);
 
-  res.status(err.status || 500).json({
-    status: err.status || 500,
-    message: err.message || 'Something went wrong',
-    data: err.data || null,
+  res.status(500).json({
+    durum: 500,
+    mesaj: "Sunucu hatası",
+    hata: err.message,
   });
 };
-
-module.exports = errorHandler;

@@ -11,25 +11,25 @@ const app = express();
 app.use(express.json());
 
 // MongoDB bağlantısı
-const mongoUri = process.env.MONGO_URL; // Render veya .env'den alınacak
-console.log("Connecting to MongoDB URI:", mongoUri);
+const mongoUri = process.env.MONGO_URL;
+console.log("🔗 Connecting to MongoDB:", mongoUri);
 
 mongoose
   .connect(mongoUri)
   .then(() => console.log("✅ MongoDB bağlantısı başarılı"))
   .catch((err) => {
-    console.error("❌ MongoDB bağlantı hatası:", err);
+    console.error("❌ MongoDB bağlantı hatası:", err.message);
     process.exit(1);
   });
 
 // Routes
 app.use("/contacts", contactsRouter);
 
-// 404 ve hata middleware’leri
+// Middleware
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-// Server portu
+// Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🌍 Server ${PORT} portunda çalışıyor...`);
