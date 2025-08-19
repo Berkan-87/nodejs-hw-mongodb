@@ -1,72 +1,70 @@
+// routes/contacts.js
 const express = require("express");
 const Contact = require("../models/contact");
 
 const router = express.Router();
 
-// GET: Tüm contactları getir
-router.get("/", async (req, res, next) => {
+// Tüm contactları getir
+router.get("/", async (req, res) => {
   try {
     const contacts = await Contact.find();
-    res.json({ durum: 200, mesaj: "Başarılı", veri: contacts });
-  } catch (err) {
-    next(err);
+    res.json(contacts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
-// POST: Yeni contact ekle
-router.post("/", async (req, res, next) => {
+// Tek contact getir
+router.get("/:id", async (req, res) => {
   try {
-    const { name, email, phoneNumber, isFavourite, contactType } = req.body;
-
-    // required alan kontrolü
-    if (!name || !phoneNumber || !contactType) {
-      return res.status(400).json({ 
-        durum: 400, 
-        mesaj: "name, phoneNumber ve contactType zorunlu", 
-        veri: null 
-      });
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) {
+      return res.status(404).json({ message: "Contact bulunamadı" });
     }
-
-    const newContact = await Contact.create({ name, email, phoneNumber, isFavourite, contactType });
-    res.status(201).json({ durum: 201, mesaj: "Contact eklendi", veri: newContact });
-  } catch (err) {
-    next(err);
+    res.json(contact);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
-// GET: Tek contact
-router.get("/:contactId", async (req, res, next) => {
+// Yeni contact ekle
+router.post("/", async (req, res) => {
   try {
-    const contact = await Contact.findById(req.params.contactId);
-    if (!contact) 
-      return res.status(404).json({ durum: 404, mesaj: "Contact bulunamadı", veri: null });
-    res.json({ durum: 200, mesaj: "Başarılı", veri: contact });
-  } catch (err) {
-    next(err);
+    const newContact = new Contact(req.body);
+    const savedContact = await newContact.save();
+    res.status(201).json(savedContact);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
-// PATCH: Contact güncelle
-router.patch("/:contactId", async (req, res, next) => {
+// Contact güncelle (PATCH)
+router.patch("/:id", async (req, res) => {
   try {
-    const updated = await Contact.findByIdAndUpdate(req.params.contactId, req.body, { new: true });
-    if (!updated) 
-      return res.status(404).json({ durum: 404, mesaj: "Contact bulunamadı", veri: null });
-    res.json({ durum: 200, mesaj: "Güncellendi", veri: updated });
-  } catch (err) {
-    next(err);
+    const updatedContact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true } // güncellenmiş halini döndürsün
+    );
+    if (!updatedContact) {
+      return res.status(404).json({ message: "Contact bulunamadı" });
+    }
+    res.json(updatedContact);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
-// DELETE: Contact sil
-router.delete("/:contactId", async (req, res, next) => {
+// Contact sil
+router.delete("/:id", async (req, res) => {
   try {
-    const deleted = await Contact.findByIdAndDelete(req.params.contactId);
-    if (!deleted) 
-      return res.status(404).json({ durum: 404, mesaj: "Contact bulunamadı", veri: null });
-    res.json({ durum: 200, mesaj: "Silindi", veri: deleted });
-  } catch (err) {
-    next(err);
+    const deletedContact = await Contact.findByIdAndDelete(req.params.id);
+    if (!deletedContact) {
+      return res.status(404).json({ message: "Contact bulunamadı" });
+    }
+    res.json({ message: "Contact silindi" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
