@@ -1,2 +1,4 @@
 node_modules
 .env
+node_modules/merge-descriptors/LICENSE
+node_modules/merge-descriptors/README.md
