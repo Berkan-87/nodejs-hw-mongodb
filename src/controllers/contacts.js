@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import createHttpError from 'http-errors';
 import {
   getContacts,
@@ -41,36 +40,11 @@ export const getContactByIdController = async (req, res, next) => {
     next(createHttpError(404, `Contact with id ${contactId} was not found`));
     return;
   }
-=======
-import express from 'express';
-import { getAllContacts, getContactById } from '../services/contacts.js';
-
-const router = express.Router();
-
-router.get('/', async (req, res) => {
-  const contacts = await getAllContacts();
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully found contacts!',
-    data: contacts,
-  });
-});
-
-router.get('/:contactId', async (req, res) => {
-  const { contactId } = req.params;
-  const contact = await getContactById(contactId);
-
-  if (!contact) {
-    return res.status(404).json({ message: 'Contact not found' });
-  }
-
->>>>>>> be58fe9c217bd25423b7ee3178f64d671e181bf6
   res.status(200).json({
     status: 200,
     message: `Successfully found contact with id ${contactId}!`,
     data: contact,
   });
-<<<<<<< HEAD
 };
 
 export const createContactController = async (req, res) => {
@@ -127,8 +101,3 @@ export const deleteContactController = async (req, res, next) => {
   }
   res.status(204).send();
 };
-=======
-});
-
-export default router;
->>>>>>> be58fe9c217bd25423b7ee3178f64d671e181bf6

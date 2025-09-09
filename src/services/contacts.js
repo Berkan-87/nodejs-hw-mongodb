@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
@@ -66,14 +65,4 @@ export async function updateContact({ _id, userId }, payload, options = {}) {
 
 export async function deleteContact({ _id, userId }) {
   return await ContactsCollection.findOneAndDelete({ _id, userId });
-=======
-import Contact from '../db/models/Contact.js';
-
-export async function getAllContacts() {
-  return Contact.find();
-}
-
-export async function getContactById(contactId) {
-  return Contact.findById(contactId);
->>>>>>> be58fe9c217bd25423b7ee3178f64d671e181bf6
 }
