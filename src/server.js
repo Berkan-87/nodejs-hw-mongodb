@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+<<<<<<< HEAD
 import cookieParser from 'cookie-parser';
 
 import { env } from './utils/env.js';
@@ -25,9 +26,31 @@ export function setupServer() {
 
   const PORT = Number(env('PORT', 3000));
 
+=======
+import pino from 'pino-http';
+import contactsRouter from './controllers/contacts.js';
+
+export function setupServer() {
+  const app = express();
+
+  app.use(cors());
+  app.use(express.json());
+  app.use(pino());
+
+  app.use('/contacts', contactsRouter);
+
+  app.use((req, res) => {
+    res.status(404).json({ message: 'Not found' });
+  });
+
+  const PORT = process.env.PORT || 3000;
+>>>>>>> be58fe9c217bd25423b7ee3178f64d671e181bf6
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> be58fe9c217bd25423b7ee3178f64d671e181bf6
