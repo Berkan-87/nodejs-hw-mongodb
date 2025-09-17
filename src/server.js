@@ -16,13 +16,13 @@ export function setupServer() {
   app.use(cors());
   app.use(cookieParser());
 
-  app.use('/api/auth', authRouter);
-  app.use('/', authRouter); 
+  // /register ve /login gibi route’lar kökten çalışacak
+  app.use('/api/auth', authRouter); // mevcut
+  app.use('/', authRouter);         // eklenen
+
   app.use('/api/contacts', contactsRouter);
 
-
   app.use(notFoundHandler);
-
   app.use(errorHandler);
 
   const PORT = Number(env('PORT', 3000));

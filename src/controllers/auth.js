@@ -1,7 +1,8 @@
 import { register, login, refreshSession, logout } from '../services/auth.js';
 
 export async function registerController(req, res) {
-  const data = await register(req.body);
+  const { name = "Anonymous", email, password } = req.body; // name boşsa default
+  const data = await register({ name, email, password });
 
   res.status(201).json({
     status: 201,
