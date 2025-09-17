@@ -17,6 +17,7 @@ export function setupServer() {
   app.use(cookieParser());
 
   app.use('/api/auth', authRouter);
+  app.use('/', authRouter); 
   app.use('/api/contacts', contactsRouter);
 
 
