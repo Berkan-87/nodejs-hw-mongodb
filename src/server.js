@@ -16,12 +16,22 @@ export function setupServer() {
   app.use(cors());
   app.use(cookieParser());
 
-  // /register ve /login gibi route’lar kökten çalışacak
-  app.use('/api/auth', authRouter); // mevcut
-  app.use('/', authRouter);         // eklenen
+  // GET / route'u tarayıcıdan açıldığında cevap verecek
+  app.get('/', (req, res) => {
+    res.json({
+      status: 200,
+      message: "API çalışıyor!"
+    });
+  });
 
+  // Auth route’ları
+  app.use('/api/auth', authRouter); // mevcut
+  app.use('/', authRouter);         // eklenen, /register için çalışacak
+
+  // Contacts route
   app.use('/api/contacts', contactsRouter);
 
+  // 404 ve error handler
   app.use(notFoundHandler);
   app.use(errorHandler);
 
