@@ -17,7 +17,6 @@ export async function register(payload) {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-
   return UsersCollection.create({ ...payload, password: hashPassword });
 }
 
@@ -26,11 +25,14 @@ export async function login({ email, password }) {
   if (!user) {
     throw createHttpError(401, 'Email or password invalid');
   }
+
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw createHttpError(401, 'Email or password invalid');
   }
+
   await SessionCollection.deleteOne({ userId: user._id });
+
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
 
